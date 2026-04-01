@@ -22,4 +22,3 @@ if errorlevel 1 exit 1
 
 :: Rename the .lib file without the embedded version number
 ren %LIBRARY_LIB%\leptonica-%PKG_VERSION%.lib %LIBRARY_LIB%\leptonica.lib
-ren %LIBRARY_LIB%\leptonica-%PKG_VERSION%.lib %LIBRARY_LIB%\lept.lib
