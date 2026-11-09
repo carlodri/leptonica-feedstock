@@ -33,7 +33,7 @@ requirements:
     - if: not win
       then: m4
     - if: not win
-      then: pkg-config
+      then: pkgconf
     - if: win
       then: cmake
   host:
@@ -69,7 +69,7 @@ tests:
         - ${{ compiler('cxx') }}
         - cmake
         - ninja
-        - pkg-config
+        - pkgconf
     script:
       - cd cmake_test
       - if: unix
