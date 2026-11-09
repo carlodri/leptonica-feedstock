@@ -73,7 +73,7 @@ tests:
     script:
       - cd cmake_test
       - if: unix
-        then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 $CMAKE_ARGS .
+        then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 -DPKG_CONFIG_EXECUTABLE=$PREFIX/bin/pkg-config $CMAKE_ARGS .
       - if: win
         then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .
       - if: unix
