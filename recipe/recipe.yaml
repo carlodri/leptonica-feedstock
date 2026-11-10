@@ -1,4 +1,3 @@
-# TODO: conda-forge giflib missing headers on windows?
 schema_version: 1
 
 context:
@@ -16,7 +15,7 @@ source:
       then: patches/0001-point-to-our-own-prefix-in-CMake-metadata-on-windows.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -33,9 +32,11 @@ requirements:
     - if: not win
       then: m4
     - if: not win
-      then: pkg-config
+      then: pkgconf
     - if: win
-      then: cmake
+      then:
+        - cmake
+        - ninja
   host:
     - giflib
     - libjpeg-turbo
@@ -43,7 +44,6 @@ requirements:
     - libtiff
     - libwebp
     - openjpeg
-    - liblzma-devel
     - zlib
   run_exports:
     - ${{ pin_subpackage("leptonica", upper_bound='x.x') }}
@@ -69,13 +69,15 @@ tests:
         - ${{ compiler('cxx') }}
         - cmake
         - ninja
-        - pkg-config
+        - pkgconf
     script:
       - cd cmake_test
       - if: unix
-        then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 $CMAKE_ARGS .
+        then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 -DPKG_CONFIG_EXECUTABLE=$PREFIX/bin/pkg-config $CMAKE_ARGS .
       - if: win
         then: cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .
+      - if: unix
+        then: pkg-config --print-errors --exact-version=${{ version }} lept
 
 about:
   license: BSD-2-Clause
@@ -94,3 +96,4 @@ extra:
     - CurtLH
     - izahn
     - chrisdeutsch
+    - carlodri
